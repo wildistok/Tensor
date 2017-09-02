@@ -199,13 +199,8 @@ if __name__ == "__main__":
 		sheet = open_file(file)			#get first sheet of book
 		get_names(sheet, names)
 
-	eff_workers = []
-	for i in range(len(names)):
-		eff_workers.append([])
-		for j in range(1):
-			eff_workers[i].append(names[i])
-			eff_workers[i].append(0)
-
+	#generate a list with names with the names of employees and effectiveness = 0
+	eff_workers = [[name, 0] for name in names]
 
 	for file in exel_files:
 		sheet = open_file(file)	
