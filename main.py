@@ -4,33 +4,24 @@
 # import sys 				#module for get name of system for get path(method: get_symbol)
 
 from task import *
-
+    
 exel_files = get_files()
 names = [] 
 for file in exel_files:
-	sheet = open_file(file)			#get first sheet of book
-	get_names(sheet, names)
-	
+    sheet = open_file(file)         #get first sheet of book
+    get_names(sheet, names)
 
-eff_workers = []
-for i in range(len(names)):
-	eff_workers.append([])
-	for j in range(1):
-		eff_workers[i].append(names[i])
-		eff_workers[i].append(0)
-
-
+#generate a dict with the names of employees and effectiveness = 0
+eff_workers = {name: 0 for name in names}
 for file in exel_files:
-	sheet = open_file(file)	
-	for i in range(len(names)):
-		num = 0
-		value = eff_index(sheet, names[i])
-		if (value != 0):
-			eff_workers[i][1] = eff_workers[i][1] + value
-			num = num + 1
+    sheet = open_file(file)
+    for name in eff_workers:
+        value = eff_index(sheet, name)
+        if (value != 0):
+            eff_workers[name] += value
 
-sort_by_index(eff_workers)
 
-for i in range(len(eff_workers)):
-	names[i] = eff_workers[i][0]
-print(names)
+#sorted dict of employes by effectiveness
+sorted_data = sorted(eff_workers.items(), key=lambda x:x[1], reverse=True)
+for data in sorted_data:
+    print(data[0])
